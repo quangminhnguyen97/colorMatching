@@ -17,3 +17,8 @@ export function getPlayAgainButton() {
 export function getColorBackground() {
   return document.querySelector('.color-background')
 }
+
+export function getActivedLiElement() {
+  return document.querySelectorAll('#colorList > li:not(.active)')
+}
+
