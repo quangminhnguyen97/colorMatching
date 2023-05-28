@@ -53,63 +53,68 @@
   <body>
     <section class="color-background">
       <div class="game">
-        <h1 class="game__title">Color Matching</h1>
-        <p class="game__timer"></p>
-        <div class="game__button-wrapper">
-          <button class="game__button">Play Again</button>
-        </div>
+        <div>
+          <h1 class="game__title">Color Matching</h1>
+          <p class="game__timer"></p>
+          <div class="game__button-wrapper">
+            <button class="game__button">Play Again</button>
+          </div>
 
-        <div class="game__board">
-          <ul id="colorList" class="color-list">
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-            <li>
-              <div class="overlay"></div>
-            </li>
-          </ul>
+          <div class="game__board">
+            <ul id="colorList" class="color-list">
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+              <li>
+                <div class="overlay"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <img src="images/pause.png" alt="pause" id="bgMusic" class="bgMusic" />
         </div>
       </div>
 
@@ -137,6 +142,10 @@
         >
       </footer>
     </section>
+
+    <audio id="mySong" autoplay>
+      <source src="audio/bgMusic.mp3" type="audio/mp3" />
+    </audio>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"

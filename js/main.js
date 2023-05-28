@@ -1,18 +1,26 @@
-import { GAME_STATUS } from './constants.js'
-import { changeBackgroundColor, getRandomColorPairs, getTimerText, hideReplayButton, showReplayButton } from './utils.js';
-import { getActivedLiElement, getColorElementList, getColorListElement, getPlayAgainButton, getTimerElement } from './selectors.js'
-import { PAIRS_COUNT } from './constants.js';
+import { GAME_STATUS, PAIRS_COUNT, GAME_TIME } from './constants.js'
+import { changeBackgroundColor, getRandomColorPairs, getTimerText, hideReplayButton, showReplayButton, createTimer } from './utils.js';
+import { getActivedLiElement, getAudioElement, getAudioIconElement, getColorElementList, getColorListElement, getPlayAgainButton } from './selectors.js'
 
 // Global variables
 let selections = []
 let gameStatus = GAME_STATUS.PLAYING
 
-// TODOs
-// 1. Generating colors using https://github.com/davidmerfield/randomColor
-// 2. Attach item click for all li elements
-// 3. Check win logic
-// 4. Add timer
-// 5. Handle replay click
+let timer = createTimer({
+  second: 30,
+  onChange: handleTimeChange,
+  onFinish: handleFinishGame
+})
+
+function handleTimeChange(second) {
+  getTimerText(`${second}s`)
+}
+
+function handleFinishGame() {
+  gameStatus = GAME_STATUS.FINISHED
+  getTimerText('Game over! 😭')
+  showReplayButton()
+}
 
 function handleClick(liElement) {
   const shouldBlockClick = [GAME_STATUS.BLOCKING, GAME_STATUS.FINISHED].includes(gameStatus)
@@ -34,6 +42,7 @@ function handleClick(liElement) {
     if (isWin) {
       showReplayButton()
       getTimerText('You win! ️🎉')
+      clearTimer()
       gameStatus = GAME_STATUS.FINISHED
     }
     selections = []
@@ -46,7 +55,9 @@ function handleClick(liElement) {
     selections[0].classList.remove('active')
     selections[1].classList.remove('active')
     selections = []
-    gameStatus = GAME_STATUS.PLAYING
+    if (gameStatus !== GAME_STATUS.FINISHED) {
+      gameStatus = GAME_STATUS.PLAYING
+    }
   }, 500)
 
 }
@@ -83,6 +94,7 @@ function resetGame() {
     liElement.classList.remove('active')
   }
   initColorList()
+  startTimer()
 }
 
 function attachEventForReplayButton() {
@@ -90,14 +102,33 @@ function attachEventForReplayButton() {
   if (replayButton) replayButton.addEventListener('click', () => resetGame())
 }
 
-//main 
+function startTimer() {
+  timer.start()
+}
+
+function clearTimer() {
+  timer.clear()
+}
+
+function attachSoundForGame() {
+  const audio = getAudioElement()
+  const iconAudio = getAudioIconElement()
+
+  iconAudio.onclick = function () {
+    if (audio.paused) {
+      audio.play()
+      iconAudio.src = "images/pause.png"
+    } else {
+      audio.pause()
+      iconAudio.src = "images/play.png"
+    }
+  }
+}
+
 (() => {
-  // init colors
   initColorList()
-
-  // attach event
   attachEventWhenClick()
-
   attachEventForReplayButton()
-
+  startTimer()
+  attachSoundForGame()
 })()

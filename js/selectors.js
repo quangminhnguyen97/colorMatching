@@ -21,3 +21,11 @@ export function getColorBackground() {
 export function getActivedLiElement() {
   return document.querySelectorAll('#colorList > li:not(.active)')
 }
+
+export function getAudioElement() {
+  return document.getElementById('mySong')
+}
+
+export function getAudioIconElement() {
+  return document.getElementById('bgMusic')
+}

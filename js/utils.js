@@ -55,3 +55,27 @@ export const changeBackgroundColor = (color) => {
   const sectionElement = getColorBackground()
   if (sectionElement) sectionElement.style.backgroundColor = color
 }
+
+export function createTimer({ second, onChange, onFinish }) {
+  let intervalId = null
+  let currentSeconds = second
+  function start() {
+    clear()
+    intervalId = setInterval(() => {
+      if (onChange) onChange(currentSeconds)
+      currentSeconds--
+      if (currentSeconds < 0) {
+        clear()
+        onFinish()
+      }
+    }, 1000)
+  }
+  function clear() {
+    clearInterval(intervalId)
+    currentSeconds = second
+  }
+  return {
+    start,
+    clear
+  }
+}
