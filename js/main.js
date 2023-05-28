@@ -1,6 +1,6 @@
 import { GAME_STATUS } from './constants.js'
-import { getRandomColorPairs } from './utils.js';
-import { getActivedLiElement, getColorElementList, getColorListElement } from './selectors.js'
+import { changeBackgroundColor, getRandomColorPairs, getTimerText, hideReplayButton, showReplayButton } from './utils.js';
+import { getActivedLiElement, getColorElementList, getColorListElement, getPlayAgainButton, getTimerElement } from './selectors.js'
 import { PAIRS_COUNT } from './constants.js';
 
 // Global variables
@@ -16,8 +16,8 @@ let gameStatus = GAME_STATUS.PLAYING
 
 function handleClick(liElement) {
   const shouldBlockClick = [GAME_STATUS.BLOCKING, GAME_STATUS.FINISHED].includes(gameStatus)
-
-  if (!liElement || shouldBlockClick) return
+  const activedLi = liElement.classList.contains('active')
+  if (!liElement || activedLi || shouldBlockClick) return
   liElement.classList.add('active');
 
   selections.push(liElement)
@@ -29,11 +29,12 @@ function handleClick(liElement) {
   const isMatch = firstColor === secondColor
 
   if (isMatch) {
-    const isWin = getActivedLiElement() === 0
+    changeBackgroundColor(secondColor)
+    const isWin = getActivedLiElement().length === 0
     if (isWin) {
+      showReplayButton()
+      getTimerText('You win! ️🎉')
       gameStatus = GAME_STATUS.FINISHED
-      // show text is win
-      // show btn replay
     }
     selections = []
     return
@@ -68,7 +69,25 @@ function attachEventWhenClick() {
     if (e.target.tagName !== 'LI') return
     handleClick(e.target)
   })
+}
 
+function resetGame() {
+  selections = []
+  gameStatus = GAME_STATUS.PLAYING
+
+  hideReplayButton()
+  getTimerText('')
+
+  const liList = getColorElementList()
+  for (const liElement of liList) {
+    liElement.classList.remove('active')
+  }
+  initColorList()
+}
+
+function attachEventForReplayButton() {
+  const replayButton = getPlayAgainButton()
+  if (replayButton) replayButton.addEventListener('click', () => resetGame())
 }
 
 //main 
@@ -78,5 +97,7 @@ function attachEventWhenClick() {
 
   // attach event
   attachEventWhenClick()
+
+  attachEventForReplayButton()
 
 })()

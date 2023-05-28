@@ -21,4 +21,3 @@ export function getColorBackground() {
 export function getActivedLiElement() {
   return document.querySelectorAll('#colorList > li:not(.active)')
 }
-

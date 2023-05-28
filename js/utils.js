@@ -1,3 +1,5 @@
+import { getColorBackground, getPlayAgainButton, getTimerElement } from "./selectors.js";
+
 function shuffle(array) {
   let currentIndex = array.length, randomIndex;
 
@@ -32,4 +34,24 @@ export const getRandomColorPairs = (count) => {
   shuffle(fullColorList)
 
   return fullColorList
+}
+
+export function showReplayButton() {
+  const replayButton = getPlayAgainButton()
+  if (replayButton) replayButton.classList.add('show')
+}
+
+export function hideReplayButton() {
+  const replayButton = getPlayAgainButton()
+  if (replayButton) replayButton.classList.remove('show')
+}
+
+export const getTimerText = (text) => {
+  const timerTextElement = getTimerElement()
+  if (timerTextElement) timerTextElement.textContent = text
+}
+
+export const changeBackgroundColor = (color) => {
+  const sectionElement = getColorBackground()
+  if (sectionElement) sectionElement.style.backgroundColor = color
 }
