@@ -21,6 +21,20 @@
   background-color: #fff;
 }
 
+@media only screen and (max-width: 900px) {
+  .game {
+      max-width: 400px !important;
+      padding: 30px 40px !important;
+    }
+  .color-list {
+    width: 300px !important;
+  }
+  .color-list > li {
+    width: 65px !important;
+    height: 65px !important;
+  }
+}
+
 .bgMusic{
   width: 30px;
 }
